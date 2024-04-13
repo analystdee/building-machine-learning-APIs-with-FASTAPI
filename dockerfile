@@ -5,10 +5,10 @@ FROM python:3.12.0
 WORKDIR /app
 
 #copy requirements.txt into a temporary directory in the container
-COPY requirements.txt /tmp/requiremets.txt
+COPY requirements.txt .
 
 #install packages in the requirements.txt
-RUN python -m pip install --timeout 300000 -r /tmp/requirements.txt
+RUN python -m pip install --upgrade pip --timeout 300000 --retries 3 -r requirements.txt
 
 #copy all files and folders into the container working directory
 COPY . /app
@@ -17,4 +17,4 @@ COPY . /app
 EXPOSE 8077
 
 #run the fastapi application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", 8077]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8077"]
